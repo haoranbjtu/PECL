@@ -1,34 +1,26 @@
 from SELFRec import SELFRec
 from util.conf import ModelConf
 import time
+# from haory_util import homo_g
+import subprocess
+import os
 
-def print_models(title, models):
-    print(f"{'=' * 80}\n{title}\n{'-' * 80}")
-    for category, model_list in models.items():
-        print(f"{category}:\cn   {'   '.join(model_list)}\n{'-' * 80}")
 
 if __name__ == '__main__':
-    models = {
-        'Graph-Based Baseline Models': ['LightGCN', 'DirectAU', 'MF'],
-        'Self-Supervised Graph-Based Models': ['SGL', 'SimGCL', 'SEPT', 'MHCN', 'BUIR', 'SelfCF', 'SSL4Rec', 'XSimGCL', 'NCL', 'MixGCF'],
-        'Sequential Baseline Models': ['SASRec'],
-        'Self-Supervised Sequential Models': ['CL4SRec', 'BERT4Rec']
-    }
 
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(script_dir, "haory_util/homo_g.py")
     print('=' * 80)
-    print('   SELFRec: A library for self-supervised recommendation.   ')
-    print_models("Available Models", models)
-
+    print("Running to preprocess data...")
+    subprocess.run(["python", path], check=True)
+    print("Finished running\n")
     # model = input('Please enter the model you want to run:')
-    model = 'NCL' # use 'NCL', dont change
+    model = 'PECL'
     s = time.time()
-    all_models = sum(models.values(), [])
-    if model in all_models:
-        conf = ModelConf(f'./conf/{model}.yaml')
-        rec = SELFRec(conf)
-        rec.execute()
-        e = time.time()
-        print(f"Running time: {e - s:.2f} s")
-    else:
-        print('Wrong model name!')
-        exit(-1)
+
+    conf = ModelConf(f'./conf/{model}.yaml')
+    rec = SELFRec(conf)
+    rec.execute()
+    e = time.time()
+    print(f"Running time: {e - s:.2f} s")
+

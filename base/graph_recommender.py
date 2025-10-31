@@ -8,12 +8,12 @@ from util.evaluation import ranking_evaluation
 
 
 class GraphRecommender(Recommender):
-    def __init__(self, conf, training_set, test_set, **kwargs):
-    # def __init__(self, conf, training_set, test_set, training_time, test_time, **kwargs):
-        super(GraphRecommender, self).__init__(conf, training_set, test_set, **kwargs)
-        # super(GraphRecommender, self).__init__(conf, training_set, test_set, training_time, test_time, **kwargs)
-        self.data = Interaction(conf, training_set, test_set)
-        # self.data = Interaction(conf, training_set, test_set, training_time, test_time)
+    # def __init__(self, conf, training_set, test_set, **kwargs):
+    def __init__(self, conf, training_set, test_set, training_time, test_time, **kwargs):
+        # super(GraphRecommender, self).__init__(conf, training_set, test_set, **kwargs)
+        super(GraphRecommender, self).__init__(conf, training_set, test_set, training_time, test_time, **kwargs)
+        # self.data = Interaction(conf, training_set, test_set)
+        self.data = Interaction(conf, training_set, test_set, training_time, test_time)
         self.bestPerformance = []
         self.topN = [int(num) for num in self.ranking]
         self.max_N = max(self.topN)

@@ -1,0 +1,36 @@
+training.set: ./dataset/ml-1m/train.txt
+
+test.set: ./dataset/ml-1m/test.txt
+
+dataset: ml
+model:
+  name: PECL
+  type: graph
+
+item.ranking.topN: [10,20] #目前训练中print的是10
+
+embedding.size: 64
+max.epoch: 80
+batch.size: 2048 #256
+learning.rate: 0.001
+reg.lambda: 0.0001
+
+PECL:
+  n_layer: 3
+  ssl_reg: 1e-6     # 结构折损
+  multi_reg: 1e-6
+  proto_reg: 1e-7   # 语义折损
+  time_reg: 1e-7
+  path_reg: 1e-7
+  tau: 0.05
+  hyper_layers: 1
+  alpha: 1.5
+  num_clusters: 2000
+  lambda: 1e-4
+  temp: 0.2
+  aug_type: 1
+  drop_rate: 0.1
+  threshold: 0.0001
+
+
+output: ./results/

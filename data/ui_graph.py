@@ -6,12 +6,13 @@ import scipy.sparse as sp
 
 
 class Interaction(Data, Graph):
-    def __init__(self, conf, training, test):
-    # def __init__(self, conf, training, test, training_time, test_time):
+    # def __init__(self, conf, training, test):
+    def __init__(self, conf, training, test, training_time, test_time):
         Graph.__init__(self)
-        Data.__init__(self, conf, training, test)
-        # Data.__init__(self, conf, training, test, training_time, test_time)
-
+        # Data.__init__(self, conf, training, test)
+        Data.__init__(self, conf, training, test, training_time, test_time)
+        args = self.config['PECL']
+        self.threshold = args['threshold']
         self.user = {}
         self.item = {}
         self.id2user = {}
@@ -25,12 +26,12 @@ class Interaction(Data, Graph):
         self.user_num = len(self.training_set_u)
         self.item_num = len(self.training_set_i)
         self.ui_adj = self.__create_sparse_bipartite_adjacency()
-        self.ui_rate = self.__create_sparse_interaction_matrix_rate()
-        # self.ui_time = self.__create_sparse_interaction_matrix_time()
+        # self.ui_rate = self.__create_sparse_interaction_matrix_rate()
+        self.ui_time = self.__create_sparse_interaction_matrix_time()
         self.norm_adj = self.normalize_graph_mat(self.ui_adj)
-        self.norm_rate = self.normalize_laplacian_matrix_rate(self.ui_rate)
-        # self.norm_time = self.normalize_laplacian_matrix(self.ui_time)
-        self.norm_random_adj = self.__create_random_walk_adj()
+        # self.norm_rate = self.normalize_laplacian_matrix_rate(self.ui_rate)
+        self.norm_time = self.normalize_laplacian_matrix(self.ui_time)
+        self.norm_random_adj = self.__create_random_walk_adj()###################
         self.interaction_mat = self.__create_sparse_interaction_matrix()
         
 
@@ -82,6 +83,10 @@ class Interaction(Data, Graph):
         random_walk_mat = norm_adj
         for _ in range(walk_length - 1):
             random_walk_mat = restart_prob * norm_adj.dot(random_walk_mat) + (1 - restart_prob) * norm_adj
+
+        #在这里加阈值截断 + 去零
+        random_walk_mat.data[random_walk_mat.data < self.threshold] = 0
+        random_walk_mat.eliminate_zeros()
         
         return random_walk_mat
 

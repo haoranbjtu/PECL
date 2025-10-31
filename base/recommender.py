@@ -5,11 +5,11 @@ from time import strftime, localtime, time
 
 
 class Recommender:
-    def __init__(self, conf, training_set, test_set, **kwargs):
-    # def __init__(self, conf, training_set, test_set, training_time, test_time, **kwargs):
+    # def __init__(self, conf, training_set, test_set, **kwargs):
+    def __init__(self, conf, training_set, test_set, training_time, test_time, **kwargs):
         self.config = conf
-        self.data = Data(self.config, training_set, test_set)
-        # self.data = Data(self.config, training_set, test_set, training_time, test_time)
+        # self.data = Data(self.config, training_set, test_set)
+        self.data = Data(self.config, training_set, test_set, training_time, test_time)
 
         # Store references in class attributes for repeated use
         model_config = self.config['model']
