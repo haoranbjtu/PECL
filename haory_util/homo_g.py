@@ -96,6 +96,8 @@ val_g = build_train_graph(g, val_indices_g)
 test_g = build_train_graph(g, test_indices_g)
 
 
+# Allow this script to run independently on a fresh checkout.
+os.makedirs(outputdir, exist_ok=True)
 with open(outputdir + '/homo_dataset.pkl', 'wb') as f:
     pickle.dump(train_df, f, pickle.HIGHEST_PROTOCOL)
     pickle.dump(val_df, f, pickle.HIGHEST_PROTOCOL)
