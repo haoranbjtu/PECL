@@ -97,17 +97,3 @@ The model calculates recommendation scores from user and item embeddings and eva
 
 The project does not include a performance report reproduced under a standardized environment. Reported metrics should be based on actual training and evaluation runs.
 
-## Citation
-
-If you find this project useful in your research, please cite our paper:
-
-```bibtex
-@article{sun2026path,
-  title={Path-Enhanced Contrastive Learning for Recommendation},
-  author={Sun, Haoran and Xiong, Fei and Hu, Yuanzhe and Wang, Liang},
-  journal={Advances in Neural Information Processing Systems},
-  volume={38},
-  pages={86215--86241},
-  year={2026}
-}
-```
